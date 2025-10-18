@@ -18,7 +18,7 @@ Il bot è progettato con **Discord.js v14** e supporta comandi slash.
 
 ## 🗂️ Struttura del progetto
 
-'''pingbot/
+```pingbot/
 ├── src/
 │ ├── commands/
 │ │ ├── ping.js
