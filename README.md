@@ -33,7 +33,7 @@ Il bot è progettato con **Discord.js v14** e supporta comandi slash.
 ├── .gitignore
 ├── package.json
 └── README.md
-
+```
 ---
 
 ## ⚙️ Prerequisiti
