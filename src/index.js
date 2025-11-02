@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Client, GatewayIntentBits, REST, Routes } = require("discord.js");
+const { Client, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 
@@ -19,27 +19,12 @@ function getCommandFiles(dir) {
 }
 
 const commandFiles = getCommandFiles(path.join(__dirname, "commands"));
-const commands = [];
-
 for (const file of commandFiles) {
   const command = require(file);
-  if (!command.data || !command.execute) continue;
-  client.commands.set(command.data.name, command);
-  commands.push(command.data.toJSON());
-}
-
-// ----------------- Registrazione comandi globali -----------------
-const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
-
-(async () => {
-  try {
-    console.log("⏳ Registrazione comandi...");
-    await rest.put(Routes.applicationCommands(process.env.CLIENT_ID), { body: commands });
-    console.log("✅ Comandi registrati!");
-  } catch (error) {
-    console.error("❌ Errore durante il deploy dei comandi:", error);
+  if (command.data && command.execute) {
+    client.commands.set(command.data.name, command);
   }
-})();
+}
 
 // ----------------- Evento ready -----------------
 client.once("ready", () => {
@@ -61,5 +46,4 @@ client.on("interactionCreate", async interaction => {
   }
 });
 
-// ----------------- Login -----------------
 client.login(process.env.TOKEN);
